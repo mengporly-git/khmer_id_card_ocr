@@ -1,0 +1,41 @@
+PODS:
+  - Flutter (1.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - khmer_id_card_ocr (0.1.1):
+    - Flutter
+    - onnxruntime-objc (= 1.20.0)
+  - onnxruntime-c (1.20.0)
+  - onnxruntime-objc (1.20.0):
+    - onnxruntime-objc/Core (= 1.20.0)
+  - onnxruntime-objc/Core (1.20.0):
+    - onnxruntime-c (= 1.20.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - khmer_id_card_ocr (from `.symlinks/plugins/khmer_id_card_ocr/ios`)
+
+SPEC REPOS:
+  trunk:
+    - onnxruntime-c
+    - onnxruntime-objc
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  khmer_id_card_ocr:
+    :path: ".symlinks/plugins/khmer_id_card_ocr/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  image_picker_ios: 11108f476341e4fb2aa6c80d2d2882c629c33941
+  khmer_id_card_ocr: baa1a79117628a8b1fab2f1861131ce0c17bb96b
+  onnxruntime-c: 07cfff40dda7e1c54a4350bb2ad226c63150fce3
+  onnxruntime-objc: b22c5d4517e9804e47c66f1f122ec4a6aa923f86
+
+PODFILE CHECKSUM: 3ba3a73b1b12adcf321a227a745625fe0888cc82
+
+COCOAPODS: 1.16.2

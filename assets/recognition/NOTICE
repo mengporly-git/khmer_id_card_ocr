@@ -1,0 +1,13 @@
+anaksor-ocr
+Copyright 2026 Sokheng Din
+
+The networks in src/anaksor/nets are written for anaksor from the papers they implement
+(DBNet, RepViT, SVTRv2, SMTR, CPPD; see README.md). Their layer layout and tensor names follow
+the OpenOCR implementations (https://github.com/Topdu/OpenOCR, Apache License 2.0) that
+the released models were trained with, so those checkpoints load unchanged.
+
+Khmer name recognition model: Sokheng Din, anaksor-ocr rec-svtrv2-v4.
+Upstream model and character dictionary (Apache License 2.0):
+https://huggingface.co/Sokheng/anaksor-ocr/tree/5518ec408419be074e8214712c673d41ffa84285
+The bundled ONNX graph applies dynamic INT8 quantization to constant MatMul
+and Gemm weights. The character dictionary is unchanged.
