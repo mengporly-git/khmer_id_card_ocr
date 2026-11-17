@@ -8,15 +8,13 @@ network connection is needed to resolve build dependencies. Scanning works offli
 
 ## Install
 
-Add the plugin folder as a path dependency in your app.
+Add the package to your Flutter app.
 
-```yaml
-dependencies:
-  khmer_id_card_ocr:
-    path: ../khmer_id_card_ocr
+```sh
+flutter pub add khmer_id_card_ocr
 ```
 
-Run `flutter pub get`. The plugin requires Flutter 3.35+, Dart 3.9+, Android
+The plugin requires Flutter 3.35+, Dart 3.9+, Android
 API 24+ and iOS 15+. Android resolves Tesseract4Android from JitPack. If your
 build enforces settings-only repositories, add the following to its
 `dependencyResolutionManagement.repositories` block.
@@ -96,5 +94,5 @@ iOS photo-picker flow.
 - [Tesseract4Android 4.9.0](https://github.com/adaptech-cz/Tesseract4Android/tree/4.9.0).
 - [SwiftyTesseract libtesseract 0.2.0](https://github.com/SwiftyTesseract/libtesseract/releases/tag/0.2.0)
   with the iOS device and simulator slices.
-- [ICAO Doc 9303, Part 5](https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf)
+- [ICAO Doc 9303, Part 5](https://www.icao.int/sites/default/files/publications/DocSeries/9303_p5_cons_en.pdf)
   for the TD1 MRZ field positions and check digits.
