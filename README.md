@@ -14,10 +14,14 @@ Add the package to your Flutter app.
 flutter pub add khmer_id_card_ocr
 ```
 
-The plugin requires Flutter 3.35+, Dart 3.9+, Android
-API 24+ and iOS 15+. Android resolves Tesseract4Android from JitPack. If your
-build enforces settings-only repositories, add the following to its
-`dependencyResolutionManagement.repositories` block.
+The plugin requires Flutter 3.35+, Dart 3.9+, Android API 24+ and iOS 15+.
+Android resolves Tesseract4Android from JitPack.
+
+If your build enforces settings-only repositories, open
+`<your-flutter-app>/android/settings.gradle.kts` (Kotlin) or
+`<your-flutter-app>/android/settings.gradle` (Groovy). Add the `maven` entry
+inside `dependencyResolutionManagement { repositories { … } }` alongside
+your existing repositories.
 
 ```kotlin
 maven {
@@ -25,6 +29,8 @@ maven {
     content { includeGroup("cz.adaptech.tesseract4android") }
 }
 ```
+
+For Groovy, use `url = 'https://jitpack.io'` in the same `maven` block.
 
 ## Scan a photo
 

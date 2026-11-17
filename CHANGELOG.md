@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Show the Flutter app's Gradle settings file paths and where to add JitPack.
+
 ## 0.1.2
 
 - Document the public scanner, crop editor, result types, and JSON fields.

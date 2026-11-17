@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - khmer_id_card_ocr (0.1.2):
+  - khmer_id_card_ocr (0.1.3):
     - Flutter
     - onnxruntime-objc (= 1.20.0)
   - onnxruntime-c (1.20.0)
@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   image_picker_ios: 11108f476341e4fb2aa6c80d2d2882c629c33941
-  khmer_id_card_ocr: a0290a57bc400044ff1a31783685ab57bfc89165
+  khmer_id_card_ocr: 380f15a142cf51b00955704f7397883343b85070
   onnxruntime-c: 07cfff40dda7e1c54a4350bb2ad226c63150fce3
   onnxruntime-objc: b22c5d4517e9804e47c66f1f122ec4a6aa923f86
 

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'khmer_id_card_ocr'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'Offline Khmer national ID OCR.'
   s.description      = <<-DESC
 Offline Khmer national ID OCR.
