@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Document the public scanner, crop editor, result types, and JSON fields.
+
 ## 0.1.1
 
 - Add a crop editor with automatic corner suggestions and perspective correction.

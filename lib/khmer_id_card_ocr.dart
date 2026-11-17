@@ -1,3 +1,9 @@
+/// Scans the front of a Cambodian national ID card offline on Android and iOS.
+///
+/// Use [KhmerIdCardOcr] to read an image and return a [KhmerIdCardResult].
+/// To crop and straighten a photo first, use [showKhmerIdCardCrop].
+library;
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -13,12 +19,15 @@ export 'src/id_card_crop_page.dart' show showKhmerIdCardCrop;
 
 /// Reads a tightly framed, upright photo of a Cambodian ID card front.
 final class KhmerIdCardOcr {
+  /// Creates an on-device scanner for Android and iOS.
   const KhmerIdCardOcr();
 
   static const _channel = MethodChannel('khmer_id_card_ocr');
   static const _maxFileSize = 25 * 1024 * 1024;
 
-  /// Reads a local image file. The image is processed on the device.
+  /// Reads a local image file using the formats and limits of [scanBytes].
+  ///
+  /// Throws [FileSystemException] if the file cannot be opened or read.
   Future<KhmerIdCardResult> scanFile(String path) async {
     final file = File(path);
     if (await file.length() > _maxFileSize) {
@@ -27,7 +36,13 @@ final class KhmerIdCardOcr {
     return scanBytes(await file.readAsBytes());
   }
 
-  /// Reads JPEG, PNG or WebP bytes. The card should fill the image.
+  /// Reads JPEG, PNG, or WebP bytes. The card should fill an upright landscape
+  /// image of up to 25 MB and 30 megapixels.
+  ///
+  /// Throws [FormatException] if the image is unsupported, unreadable, or
+  /// cannot be identified as a Cambodian ID card. Throws [PlatformException]
+  /// if the native OCR engine fails, or [UnsupportedError] on platforms other
+  /// than Android and iOS.
   Future<KhmerIdCardResult> scanBytes(Uint8List imageBytes) async {
     if (!Platform.isAndroid && !Platform.isIOS) {
       throw UnsupportedError('Khmer ID OCR supports Android and iOS.');

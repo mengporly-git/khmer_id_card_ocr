@@ -1,6 +1,6 @@
 name: khmer_id_card_ocr
 description: Offline Khmer and Latin text recognition for Cambodian national ID cards.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/mengporly-git/khmer_id_card_ocr
 
 environment:

@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'id_card_crop.dart';
 
 /// Opens a four-corner crop editor and returns a straightened JPEG on approval.
-/// Returns null if the user closes the editor.
+///
+/// Supply a [context] with a [Navigator] and JPEG, PNG, or WebP image [bytes].
+/// The returned JPEG is suitable for OCR. Returns `null` if the user closes
+/// the editor. Throws [FormatException] if [bytes] is empty or exceeds 25 MB.
 Future<Uint8List?> showKhmerIdCardCrop(BuildContext context, Uint8List bytes) {
   if (bytes.isEmpty || bytes.length > 25 * 1024 * 1024) {
     throw const FormatException('Choose an image between 1 byte and 25 MB.');
