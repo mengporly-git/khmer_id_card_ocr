@@ -54,6 +54,7 @@ class KhmerIdCardOcrPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
         val nameLine = call.argument<Map<String, Any>>("nameLine")?.let(::textTensor)
         val latinNameLine = call.argument<Map<String, Any>>("latinNameLine")?.let(::textTensor)
+        val birthplaceLine = call.argument<Map<String, Any>>("birthplaceLine")?.let(::textTensor)
         val validityLine = call.argument<Map<String, Any>>("validityLine")?.let(::textTensor)
         val addressDetail = call.argument<Map<String, Any>>("addressDetailLine")?.let(::textTensor)
         val addressLines = call.argument<List<Map<String, Any>>>("addressLines")
@@ -94,6 +95,10 @@ class KhmerIdCardOcrPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 if (latinNameLine != null) {
                     output["latinNameLineScores"] =
                         recognizer.read(latinNameLine.input, latinNameLine.width, latinNameLine.height)
+                }
+                if (birthplaceLine != null) {
+                    output["birthplaceLineScores"] =
+                        recognizer.read(birthplaceLine.input, birthplaceLine.width, birthplaceLine.height)
                 }
                 if (addressLines.isNotEmpty()) {
                     output["addressLineScores"] = addressLines.map { line ->

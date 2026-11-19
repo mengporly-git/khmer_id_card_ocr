@@ -14,7 +14,7 @@ Add the package to your Flutter app.
 flutter pub add khmer_id_card_ocr
 ```
 
-The plugin requires Flutter 3.35+, Dart 3.9+, Android API 24+ and iOS 15+.
+The plugin requires Flutter 3.47+, Dart 3.13+, Android API 24+ and iOS 15+.
 Android resolves Tesseract4Android from JitPack.
 
 If your build enforces settings-only repositories, open
@@ -46,14 +46,37 @@ Future<String> readCard(String imagePath) async {
 ```
 
 Use `scanBytes(Uint8List)` if your image picker or upload flow already has
-bytes. To let users crop the card first, call
-`await showKhmerIdCardCrop(context, bytes)` and scan the returned JPEG if
-the user confirms the preview. The editor suggests the card's edges, lets
-users adjust the handles, and corrects perspective. The example app uses this
-flow after opening the gallery and displays copyable JSON. Run
-`flutter pub get` and `flutter run` from `example/`.
+bytes.
+
+### Crop before scanning
+
+Call `showKhmerIdCardCrop` from a widget under `MaterialApp` and pass the
+photo bytes from your image picker. The editor suggests the card's edges,
+lets the user adjust the corners, and returns a straightened JPEG when
+they confirm. If they go back, it returns `null`.
+
+```dart
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:flutter/widgets.dart';
+import 'package:khmer_id_card_ocr/khmer_id_card_ocr.dart';
+
+Future<String?> cropAndReadCard(BuildContext context, Uint8List bytes) async {
+  final cropped = await showKhmerIdCardCrop(context, bytes);
+  if (cropped == null) return null;
+
+  final result = await const KhmerIdCardOcr().scanBytes(cropped);
+  return jsonEncode(result.toJson());
+}
+```
+
+The example app opens the gallery, shows the crop editor, and displays
+copyable JSON. Run `flutter pub get` and `flutter run` from `example/`.
 Add `NSPhotoLibraryUsageDescription` to your host app if it uses the example's
 iOS photo-picker flow.
+
+### Example result
 
 ```json
 {
@@ -67,6 +90,7 @@ iOS photo-picker flow.
     "firstNameEn": "SAMOL",
     "expiredDate": "2030-09-12",
     "issuedDate": "2020-09-13",
+    "placeOfBirth": "ឃុំព្រៃកប្បាស ស្រុកព្រៃកប្បាស តាកែវ",
     "address": "ភូមិព្រៃធំ ឃុំពេជសារ ស្រុកកោះអណ្តែត តាកែវ",
     "MRZ1": "IDKHM1234567897<<<<<<<<<<<<<<<",
     "MRZ2": "8009124M3009129KHM<<<<<<<<<<<8",
@@ -81,7 +105,8 @@ iOS photo-picker flow.
   `YYYY-MM-DD`. The issue date comes from printed text. The MRZ date has a
   two-digit year, and the parser uses the printed year when available.
 - The Khmer line recognizer reads the bold Khmer OS Muol name row and the
-  smaller Battambang address rows. The printed Latin name is read from the
+  smaller Battambang birthplace and address rows. `placeOfBirth` is the
+  text printed next to ទីកន្លែងកំណើត. The printed Latin name is read from the
   row below the Khmer name and compared with the MRZ. Dates and other body
   text go through a separate Tesseract pass.
 - The returned names and address are OCR transcriptions. Review them before

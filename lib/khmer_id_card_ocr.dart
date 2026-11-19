@@ -76,6 +76,7 @@ final class KhmerIdCardOcr {
       printedLatinNameLine: readTextLine(response['latinNameLineScores']),
       printedKhmerName: readTextLine(response['nameScores']),
       printedKhmerNameLine: readTextLine(response['nameLineScores']),
+      printedBirthplaceLine: readTextLine(response['birthplaceLineScores']),
       printedAddressLines:
           (response['addressLineScores'] as List<Object?>? ?? const [])
               .map(readTextLine)

@@ -1,3 +1,17 @@
+## 0.2.0
+
+- Use the standalone `material_ui` package in the crop editor and example.
+- Raise the minimum supported versions to Flutter 3.47 and Dart 3.13.
+
+## 0.1.5
+
+- Fix a crash during Android release scans by preserving ONNX Runtime classes used by JNI when R8 minification is enabled.
+
+## 0.1.4
+
+- Read the printed birthplace and include it as `placeOfBirth` in scan results.
+- Add a README example for cropping a card with `showKhmerIdCardCrop` before scanning.
+
 ## 0.1.3
 
 - Show the Flutter app's Gradle settings file paths and where to add JitPack.

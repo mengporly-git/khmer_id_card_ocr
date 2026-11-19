@@ -3,6 +3,7 @@ import 'id_card_data.dart';
 final _khmerDigits = RegExp(r'[០-៩]');
 final _datePattern = RegExp(r'\b(\d{1,2})[./-](\d{1,2})[./-](\d{4})\b');
 final _nameLabel = RegExp(r'^.*?នាម\s*(?:និង|នឹង)\s*នាម\s*[:៖ៈ]?\s*');
+final _birthplaceLabel = RegExp(r'^ទី\s*កន្លែង\s*កំណើត\s*[:៖ៈ]?\s*');
 final _addressLabel = RegExp(r'^.*?អាស.{0,5}ដ[\u17D2]?[ឋធ]ាន\s*[:៖ៈ]?\s*');
 final _focusedAddressLabel = RegExp(
   r'^(?:[អរ]ាស.{0,5}|ស?យ)?ដ[\u17D2]?[ឋធ]ាន\s*[:៖ៈ]\s*',
@@ -32,6 +33,7 @@ KhmerIdCardResult parseIdCard({
   String? printedKhmerNameLine,
   String? printedEnglishName,
   String? printedLatinNameLine,
+  String printedBirthplaceLine = '',
   List<String> printedAddressLines = const [],
   String printedAddressDetail = '',
   String printedValidityLine = '',
@@ -158,6 +160,11 @@ KhmerIdCardResult parseIdCard({
   final address = focusedAddress.length >= printedAddress.length
       ? focusedAddress
       : printedAddress;
+  final placeOfBirth = [printedBirthplaceLine.trim(), ...printedLines]
+      .where(_birthplaceLabel.hasMatch)
+      .map((line) => line.replaceFirst(_birthplaceLabel, '').trim())
+      .where((value) => value.isNotEmpty)
+      .firstOrNull;
 
   return KhmerIdCardResult(
     KhmerIdCardData(
@@ -165,6 +172,7 @@ KhmerIdCardResult parseIdCard({
       lastNameKh: khmerParts.length >= 2 ? khmerParts.first : null,
       firstNameKh: khmerParts.length >= 2 ? khmerParts.skip(1).join(' ') : null,
       dob: _formatDate(dob),
+      placeOfBirth: placeOfBirth,
       gender: gender,
       lastNameEn: surname,
       firstNameEn: given,

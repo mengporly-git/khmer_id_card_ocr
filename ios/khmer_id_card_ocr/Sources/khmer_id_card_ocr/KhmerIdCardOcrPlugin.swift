@@ -57,6 +57,7 @@ public final class KhmerIdCardOcrPlugin: NSObject, FlutterPlugin {
         let mrzWide = images["mrzWide"] as? FlutterStandardTypedData
         let mrzCheck = images["mrzCheck"] as? FlutterStandardTypedData
         let latinNameLine = (images["latinNameLine"] as? [String: Any]).flatMap(TextTensor.init)
+        let birthplaceLine = (images["birthplaceLine"] as? [String: Any]).flatMap(TextTensor.init)
         let validityLine = (images["validityLine"] as? [String: Any]).flatMap(TextTensor.init)
         let addressDetail = (images["addressDetailLine"] as? [String: Any]).flatMap(TextTensor.init)
         let addressLines = (images["addressLines"] as? [[String: Any]] ?? [])
@@ -97,6 +98,11 @@ public final class KhmerIdCardOcrPlugin: NSObject, FlutterPlugin {
                 if let latinNameLine {
                     output["latinNameLineScores"] = try recognizer.read(
                         latinNameLine.input, width: latinNameLine.width, height: latinNameLine.height
+                    )
+                }
+                if let birthplaceLine {
+                    output["birthplaceLineScores"] = try recognizer.read(
+                        birthplaceLine.input, width: birthplaceLine.width, height: birthplaceLine.height
                     )
                 }
                 if !addressLines.isEmpty {

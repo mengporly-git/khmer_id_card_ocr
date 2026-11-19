@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'id_card_crop.dart';
 
@@ -13,10 +13,32 @@ Future<Uint8List?> showKhmerIdCardCrop(BuildContext context, Uint8List bytes) {
   if (bytes.isEmpty || bytes.length > 25 * 1024 * 1024) {
     throw const FormatException('Choose an image between 1 byte and 25 MB.');
   }
-  return Navigator.of(context).push<Uint8List>(
-    MaterialPageRoute(builder: (_) => _CardCropPage(bytes: bytes)),
-  );
+  return Navigator.of(
+    context,
+  ).push<Uint8List>(_cropRoute<Uint8List>(_CardCropPage(bytes: bytes)));
 }
+
+MaterialPageRoute<T> _cropRoute<T>(Widget page) => MaterialPageRoute<T>(
+  builder: (context) {
+    if (Localizations.of<MaterialLocalizations>(
+          context,
+          MaterialLocalizations,
+        ) !=
+        null) {
+      return page;
+    }
+
+    // Apps using the SDK's MaterialApp supply a different localization type.
+    const delegate = GlobalMaterialLocalizations.delegate;
+    final locale = Localizations.localeOf(context);
+    return Localizations.override(
+      context: context,
+      locale: delegate.isSupported(locale) ? locale : const Locale('en'),
+      delegates: const [delegate],
+      child: page,
+    );
+  },
+);
 
 const _background = Color(0xFF0C0D10);
 const _action = Color(0xFF0678DD);
@@ -127,9 +149,9 @@ class _CardCropPageState extends State<_CardCropPage> {
         corners: sourceCorners,
       ));
       if (!mounted) return;
-      final approved = await Navigator.of(context).push<bool>(
-        MaterialPageRoute(builder: (_) => _CropPreview(bytes: cropped)),
-      );
+      final approved = await Navigator.of(
+        context,
+      ).push<bool>(_cropRoute<bool>(_CropPreview(bytes: cropped)));
       if (mounted && approved == true) Navigator.of(context).pop(cropped);
     } on Exception catch (error) {
       if (!mounted) return;

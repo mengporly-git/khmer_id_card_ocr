@@ -41,6 +41,7 @@ Map<String, Object> prepareIdCardImage(Uint8List bytes) {
     'nameWidth': name.width,
     'nameHeight': name.height,
     'nameLine': ?fullNameLine?.tensor,
+    'birthplaceLine': ?body.birthplace,
     if (body.address.isNotEmpty) 'addressLines': body.address,
     'addressDetailLine': ?body.addressDetail,
     'validityLine': ?body.validity,
@@ -103,12 +104,14 @@ img.Image? _findLatinNameLine(img.Image image, double? nameBottom) {
 }
 
 ({
+  Map<String, Object>? birthplace,
   List<Map<String, Object>> address,
   Map<String, Object>? addressDetail,
   Map<String, Object>? validity,
 })
 _findBodyFields(img.Image image, double? nameBottom) {
   const empty = (
+    birthplace: null,
     address: <Map<String, Object>>[],
     addressDetail: null,
     validity: null,
@@ -117,8 +120,15 @@ _findBodyFields(img.Image image, double? nameBottom) {
   // In the label column, date of birth and birthplace precede the address.
   final rows = _inkRows(image, .255, .39, nameBottom + .032, .61);
   if (rows.length < 3) return empty;
+  final birthplace = rows[1];
   final address = rows[2];
+  // Vowels and subscripts below the label's baseline can fall outside its ink
+  // band. Leave room for them up to the start of the next printed row.
+  final birthplaceBottom = math.min(birthplace.bottom + .025, address.top);
   return (
+    birthplace: _lineTensor(
+      _crop(image, .205, birthplace.top - .019, .94, birthplaceBottom),
+    ),
     address: [
       _lineTensor(
         _crop(image, .205, address.top - .012, .94, address.bottom + .006),

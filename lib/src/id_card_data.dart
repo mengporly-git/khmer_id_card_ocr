@@ -8,6 +8,7 @@ final class KhmerIdCardData {
     this.lastNameKh,
     this.firstNameKh,
     this.dob,
+    this.placeOfBirth,
     this.gender,
     this.lastNameEn,
     this.firstNameEn,
@@ -30,6 +31,9 @@ final class KhmerIdCardData {
 
   /// The cardholder's date of birth in `YYYY-MM-DD` format.
   final String? dob;
+
+  /// The birthplace printed next to ទីកន្លែងកំណើត.
+  final String? placeOfBirth;
 
   /// The card's sex marker, either `M` or `F` when recognized.
   final String? gender;
@@ -68,6 +72,7 @@ final class KhmerIdCardData {
     'lastNameKh': lastNameKh,
     'firstNameKh': firstNameKh,
     'dob': dob,
+    'placeOfBirth': placeOfBirth,
     'gender': gender,
     'lastNameEn': lastNameEn,
     'firstNameEn': firstNameEn,
