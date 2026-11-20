@@ -2,6 +2,7 @@
 
 - Use the standalone `material_ui` package in the crop editor and example.
 - Raise the minimum supported versions to Flutter 3.47 and Dart 3.13.
+- Update Gradle and the Android Gradle Plugin in the example app.
 
 ## 0.1.5
 
